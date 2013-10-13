@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
   <Identifier Id="0e72c057-f129-425e-95a0-172a4b94464b">
-    <Name>FileStimuli</Name>
+    <Name>Stimuli Support</Name>
     <Author>Morten Engelhardt Olsen</Author>
-    <Version>0.1</Version>
-    <Description xml:space="preserve">Information about my package</Description>
+    <Version>0.7</Version>
+    <Description xml:space="preserve">This extension provides support of the stimuli file supported by the simulator. It adds a file template and language parser.</Description>
     <Locale>1033</Locale>
+    <MoreInfoUrl>https://github.com/xoriath/atmelstudio-filestimuliextension</MoreInfoUrl>
+    <License>lic.txt</License>
+    <GettingStartedGuide>http://www.atmel.no/webdoc/simulator/simulator.wb_Simulator2_Stimuli.html</GettingStartedGuide>
+    <PreviewImage>itemteplate.png</PreviewImage>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>
       <IsolatedShell Version="6.1">AtmelStudio</IsolatedShell>

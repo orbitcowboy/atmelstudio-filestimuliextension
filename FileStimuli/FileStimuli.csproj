@@ -166,6 +166,14 @@
     <None Include="Key.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="itemteplate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="lic.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <PropertyGroup>
