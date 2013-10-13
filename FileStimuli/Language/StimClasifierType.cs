@@ -38,4 +38,16 @@ namespace Xoriath.FileStimuli.Language
             ForegroundColor = Colors.Purple;
         }
     }
+
+    internal static class StrimClassificationType
+    {
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("stim.directive")]
+        internal static ClassificationTypeDefinition StimDirectiveType { get; set; }
+
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("stim.delay")]
+        internal static ClassificationTypeDefinition StimDelayType { get; set; }
+
+    }
 }
