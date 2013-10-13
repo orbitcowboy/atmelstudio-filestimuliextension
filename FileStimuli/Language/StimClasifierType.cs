@@ -39,6 +39,21 @@ namespace Xoriath.FileStimuli.Language
         }
     }
 
+    [Export(typeof(EditorFormatDefinition))]
+    [ClassificationType(ClassificationTypeNames = "stim.comment")]
+    [Name("stim.comment")]
+    [UserVisible(true)]
+    [Order(After = Priority.Default)]
+    internal sealed class StimCommentType : ClassificationFormatDefinition
+    {
+        public StimCommentType()
+        {
+            DisplayName = "Stimulus Comment";
+            IsBold = false;
+            ForegroundColor = Colors.Green;
+        }
+    }
+
     internal static class StrimClassificationType
     {
         [Export(typeof(ClassificationTypeDefinition))]
@@ -48,6 +63,10 @@ namespace Xoriath.FileStimuli.Language
         [Export(typeof(ClassificationTypeDefinition))]
         [Name("stim.delay")]
         internal static ClassificationTypeDefinition StimDelayType { get; set; }
+
+        [Export(typeof(ClassificationTypeDefinition))]
+        [Name("stim.comment")]
+        internal static ClassificationTypeDefinition StimCommentType { get; set; }
 
     }
 }

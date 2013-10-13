@@ -17,6 +17,7 @@ namespace Xoriath.FileStimuli.Language
         private static readonly Dictionary<StimParser.StimLineTypes, string> mClassifierTypeNames = new Dictionary<StimParser.StimLineTypes, string>() {
             { StimParser.StimLineTypes.DIRECTIVE, "stim.directive" },
             { StimParser.StimLineTypes.DELAY, "stim.delay" },
+            {StimParser.StimLineTypes.COMMENT, "stim.comment"},
         };
 
 
