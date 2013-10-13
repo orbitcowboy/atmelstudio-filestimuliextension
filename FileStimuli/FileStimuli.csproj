@@ -132,6 +132,7 @@
     <Compile Include="Language\StimCodeClassifierProvider.cs" />
     <Compile Include="Language\StimContentDefinition.cs" />
     <Compile Include="Language\StimParser.cs" />
+    <Compile Include="Language\StimTagger.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
