@@ -2,7 +2,7 @@
 // MUST match guids.h
 using System;
 
-namespace MortenEngelhardtOlsen.FileStimuli
+namespace Xoriath.FileStimuli
 {
     static class GuidList
     {
