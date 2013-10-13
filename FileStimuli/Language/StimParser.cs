@@ -18,7 +18,7 @@ namespace Xoriath.FileStimuli.Language
             COMMENT
         };
 
-        private static readonly Regex mDirectiveRegex = new Regex(@"\$([a-zA-Z0-9]*) .*$", RegexOptions.Compiled);
+        private static readonly Regex mDirectiveRegex = new Regex(@"\$([a-zA-Z0-9]*).*$", RegexOptions.Compiled);
         private static readonly Regex mCommentRegex = new Regex(@" *//.*$", RegexOptions.Compiled);
         private static readonly Regex mDelayRegex = new Regex(@"#[0-9]+.*$", RegexOptions.Compiled);
 
