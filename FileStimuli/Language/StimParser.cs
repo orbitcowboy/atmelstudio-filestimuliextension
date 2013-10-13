@@ -24,10 +24,10 @@ namespace Xoriath.FileStimuli.Language
         {
             string text = line.GetText();
 
-            if (mDirectiveRegex.IsMatch(text))
-            {
+            if (mDirectiveRegex.IsMatch(text)) {
+                string match = mDirectiveRegex.Match(text).Groups[1].Value;
                 yield return new Tuple<StimLineTypes, SnapshotSpan>(
-                    StimLineTypes.DIRECTIVE, new SnapshotSpan(line.Snapshot, line.Start, line.Length));
+                    StimLineTypes.DIRECTIVE, new SnapshotSpan(line.Snapshot, line.Start, text.IndexOf(match) + match.Length));
             }
             else if (mCommentRegex.IsMatch(text))
                 yield return new Tuple<StimLineTypes, SnapshotSpan>(
