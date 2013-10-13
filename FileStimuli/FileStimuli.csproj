@@ -154,6 +154,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="ItemTemplates\FileStimuliFile.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

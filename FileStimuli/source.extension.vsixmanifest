@@ -9,6 +9,7 @@
     <MoreInfoUrl>https://github.com/xoriath/atmelstudio-filestimuliextension</MoreInfoUrl>
     <License>lic.txt</License>
     <GettingStartedGuide>http://www.atmel.no/webdoc/simulator/simulator.wb_Simulator2_Stimuli.html</GettingStartedGuide>
+    <Icon>icon.png</Icon>
     <PreviewImage>itemteplate.png</PreviewImage>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>
