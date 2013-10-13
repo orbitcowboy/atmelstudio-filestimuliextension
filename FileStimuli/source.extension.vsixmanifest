@@ -15,6 +15,7 @@
   <References />
   <Content>
     <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
+    <MefComponent>|%CurrentProject%|</MefComponent>
     <ItemTemplate>ItemTemplates</ItemTemplate>
   </Content>
 </Vsix>

@@ -14,9 +14,9 @@ namespace Xoriath.FileStimuli.Language
     [Name("stim.directive")]
     [UserVisible(true)]
     [Order(After = Priority.Default)]
-    internal sealed class StimClasiffierType : ClassificationFormatDefinition
+    internal sealed class StimDirectiveType : ClassificationFormatDefinition
     {
-        public StimClasiffierType()
+        public StimDirectiveType()
         {
             DisplayName = "Stimulus Directive";
             IsBold = false;
