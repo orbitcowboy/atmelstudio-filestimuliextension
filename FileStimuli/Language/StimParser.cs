@@ -15,7 +15,7 @@ namespace Xoriath.FileStimuli.Language
             DELAY
         };
 
-        private static readonly Regex mDirectiveRegex = new Regex(@"\$([a-zA-Z0-9]*)$", RegexOptions.Compiled);
+        private static readonly Regex mDirectiveRegex = new Regex(@"\$([a-zA-Z0-9]*) .*$", RegexOptions.Compiled);
 
         public static IEnumerable<Tuple<StimLineTypes, SnapshotSpan>> Parse(ITextSnapshotLine line)
         {
