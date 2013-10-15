@@ -44,7 +44,8 @@ namespace Xoriath.FileStimuli.Language
 
             return classifications;
         }
-
+#pragma warning disable 0067
         public event EventHandler<ClassificationChangedEventArgs> ClassificationChanged;
+#pragma warning restore 0067
     }
 }
