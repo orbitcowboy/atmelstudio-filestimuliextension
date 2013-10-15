@@ -8,6 +8,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using System.IO;
 
 namespace Xoriath.FileStimuli
 {
@@ -28,6 +29,7 @@ namespace Xoriath.FileStimuli
     // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidFileStimuliPkgString)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndFullyLoaded_string)]
     public sealed class FileStimuliPackage : Package
     {
         /// <summary>
@@ -44,8 +46,53 @@ namespace Xoriath.FileStimuli
         protected override void Initialize()
         {
             base.Initialize();
+            mDTE = Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+
+            if (mDTE != null)
+                RegisterSaveHook();
+
         }
 
+        private EnvDTE.DTE mDTE;
+        private EnvDTE.DocumentEvents mEvents;
+
+        private void RegisterSaveHook()
+        {
+            if (mDTE == null)
+                return;
+            mEvents = mDTE.Events.DocumentEvents;
+            mEvents.DocumentSaved += DocumentEvents_DocumentSaved;
+        }
+
+        void DocumentEvents_DocumentSaved(EnvDTE.Document Document)
+        {
+            if (Path.GetExtension(Document.Name) == ".stim")
+            {
+                CheckForCorrectEndOfFile(Document);
+            }
+        }
+
+        private void CheckForCorrectEndOfFile(EnvDTE.Document Document)
+        {
+            var selection = Document.Selection as EnvDTE.TextSelection;
+            if (selection == null)
+                return;
+
+            var originalPoint = selection.ActivePoint;
+
+            selection.EndOfDocument(false);
+
+            var bottom = selection.BottomPoint;
+            selection.GotoLine(bottom.Line, true);
+            if (selection.Text.Length != 0)
+            {
+                selection.Text += Environment.NewLine;
+                Document.Save();
+            }
+
+            selection.MoveToPoint(originalPoint);
+
+        }
 
         protected override void Dispose(bool disposing)
         {
