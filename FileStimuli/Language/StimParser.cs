@@ -44,19 +44,25 @@ namespace Xoriath.FileStimuli.Language
         private static readonly Regex mOneArgumentRegex = new Regex(@"[$#][a-zA-Z0-9/\\:]+[ ]([a-zA-Z0-9/\\:])+[ ]*$", RegexOptions.Compiled);
         private static readonly Regex mOneArgumentIsNumberRegex = new Regex(@"[#][0-9]+[ ]*$", RegexOptions.Compiled);
         private static readonly Regex mTwoArgumentRegex = new Regex(@"[$#][a-zA-Z0-9/\\:]+[ ]([a-zA-Z0-9/\\:])+[ ]([a-zA-Z0-9/\\:])+[ ]*$", RegexOptions.Compiled);
-        private static readonly Regex mOperatorNeedsSpace = new Regex(@"[^\s]+[\=\|\&\^]+[^\s]+", RegexOptions.Compiled);
+        private static readonly Regex mOperatorHaveSpace = new Regex(@"[^\s]+[ ]+[\=\|\&\^]+[ ]+[^\s]+", RegexOptions.Compiled);
+        private static readonly Regex mDereferencingOnlyOnText = new Regex(@"[ ]\*[^a-zA-Z]+", RegexOptions.Compiled);
+        private static readonly Regex mLineIsOnlySpace = new Regex(@"^[ ]+$", RegexOptions.Compiled);
+        private static readonly Regex mDisallowedOperators = new Regex(@"[\+\-\/]+", RegexOptions.Compiled);
 
         private static readonly string ArgumentNumberErrorType = "Argument number error.";
         private static readonly string ArgumentNumberError = "Wrong number of arguments.";
         private static readonly string UnknownDirectiveErrorType = "Unknown directive.";
         private static readonly string ResetError = "Unknown reset argument. Arguments should be 'p', 'e', 'b' or 's'.";
         private static readonly string AssignmentError = "Assignments need space between operator and values.";
+        private static readonly string OperatorError = "The '*' can only occur with a named memory addres as a right value.";
 
         public static ITagSpan<ErrorTag> ParseError(SnapshotSpan span)
         {
             string text = span.GetText();
 
-            if (text.Contains("//"))
+            if (text.Length == 0)
+                return null;
+            else if (text.Contains("//"))
                 return null;
             else if (text.Contains(@"$stimulate"))
             {
@@ -136,8 +142,19 @@ namespace Xoriath.FileStimuli.Language
             }
             else if (text.Contains(@"$"))
                 return new TagSpan<ErrorTag>(span, new ErrorTag(UnknownDirectiveErrorType, UnknownDirectiveErrorType));
-            else if (mOperatorNeedsSpace.IsMatch(text))
+            else if (!mOperatorHaveSpace.IsMatch(text) && !mLineIsOnlySpace.IsMatch(text))
                 return new TagSpan<ErrorTag>(span, new ErrorTag(AssignmentError, AssignmentError));
+            else if (mDisallowedOperators.IsMatch(text))
+                return new TagSpan<ErrorTag>(span, new ErrorTag(OperatorError, OperatorError));
+            else if (text.Contains("*"))
+            {
+                if (!mDereferencingOnlyOnText.IsMatch(text))
+                    return null;
+
+                return new TagSpan<ErrorTag>(span, new ErrorTag(OperatorError, OperatorError));
+                
+            }
+
             return null;
         }
     }
