@@ -44,11 +44,13 @@ namespace Xoriath.FileStimuli.Language
         private static readonly Regex mOneArgumentRegex = new Regex(@"[$#][a-zA-Z0-9/\\:]+[ ]([a-zA-Z0-9/\\:])+[ ]*$", RegexOptions.Compiled);
         private static readonly Regex mOneArgumentIsNumberRegex = new Regex(@"[#][0-9]+[ ]*$", RegexOptions.Compiled);
         private static readonly Regex mTwoArgumentRegex = new Regex(@"[$#][a-zA-Z0-9/\\:]+[ ]([a-zA-Z0-9/\\:])+[ ]([a-zA-Z0-9/\\:])+[ ]*$", RegexOptions.Compiled);
+        private static readonly Regex mOperatorNeedsSpace = new Regex(@"[^\s]+[\=\|\&\^]+[^\s]+", RegexOptions.Compiled);
 
         private static readonly string ArgumentNumberErrorType = "Argument number error.";
         private static readonly string ArgumentNumberError = "Wrong number of arguments.";
         private static readonly string UnknownDirectiveErrorType = "Unknown directive.";
         private static readonly string ResetError = "Unknown reset argument. Arguments should be 'p', 'e', 'b' or 's'.";
+        private static readonly string AssignmentError = "Assignments need space between operator and values.";
 
         public static ITagSpan<ErrorTag> ParseError(SnapshotSpan span)
         {
@@ -134,6 +136,8 @@ namespace Xoriath.FileStimuli.Language
             }
             else if (text.Contains(@"$"))
                 return new TagSpan<ErrorTag>(span, new ErrorTag(UnknownDirectiveErrorType, UnknownDirectiveErrorType));
+            else if (mOperatorNeedsSpace.IsMatch(text))
+                return new TagSpan<ErrorTag>(span, new ErrorTag(AssignmentError, AssignmentError));
             return null;
         }
     }
