@@ -11,7 +11,7 @@ Usage
 -----
 This extension adds the option to add stimuli files to any project. This is 
 done by right clicking on any project in the Solution Explorer and choosing Add->New Item. The dialog below should now open.
-![New Item](https://github.com/xoriath/atmelstudio-filestimuliextension/blob/master/FileStimuli/itemteplate.png "New Item")
+![New Item](https://raw.github.com/xoriath/atmelstudio-filestimuliextension/master/FileStimuli/itemteplate.png "New Item")
 
 Choosing the Stimuli file and a name for said file will add a template file with example to your project.
 
