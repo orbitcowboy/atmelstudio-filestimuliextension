@@ -9,12 +9,14 @@ namespace Xoriath.FileStimuli.Language
     [Export(typeof(ITaggerProvider))]
     [TagType(typeof(StimErrorTag))]
     [ContentType("stim")]
+    [Name("StimErrorTagger")]
     public sealed class StimTaggerProvider : ITaggerProvider
     {
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
             Func<ITagger<T>> taggerFunc = () =>
                 new StimErrorTagger(buffer) as ITagger<T>;
+
             return buffer.Properties.GetOrCreateSingletonProperty<ITagger<T>>(taggerFunc);
         }
     }

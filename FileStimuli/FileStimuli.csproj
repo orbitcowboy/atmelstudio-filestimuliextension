@@ -127,12 +127,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Guids.cs" />
-    <Compile Include="Language\StimClasifierType.cs" />
+    <Compile Include="Language\StimEditorDefinitions.cs" />
     <Compile Include="Language\StimCodeClassifier.cs" />
     <Compile Include="Language\StimCodeClassifierProvider.cs" />
     <Compile Include="Language\StimContentDefinition.cs" />
+    <Compile Include="Language\StimErrorTag.cs" />
     <Compile Include="Language\StimParser.cs" />
     <Compile Include="Language\StimTagger.cs" />
+    <Compile Include="Language\StimTaggerProvider.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
