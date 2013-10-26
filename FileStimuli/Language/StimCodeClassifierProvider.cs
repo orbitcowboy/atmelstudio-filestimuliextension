@@ -23,7 +23,7 @@ namespace Xoriath.FileStimuli.Language
     }
 
     [Export(typeof(ITaggerProvider))]
-    [TagType(typeof(ErrorTag))]
+    [TagType(typeof(StimErrorTag))]
     [ContentType("stim")]
     public sealed class StimTaggerProvider : ITaggerProvider
     {

@@ -5,7 +5,12 @@ using Microsoft.VisualStudio.Text.Tagging;
 
 namespace Xoriath.FileStimuli.Language
 {
-    class StimErrorTagger : ITagger<ErrorTag>
+    internal class StimErrorTag : ErrorTag
+    {
+        public StimErrorTag(string type, string tooltip) : base(type, tooltip) { }
+    }
+
+    class StimErrorTagger : ITagger<IErrorTag>
     {
         private readonly ITextBuffer mBuffer;
 
@@ -14,7 +19,7 @@ namespace Xoriath.FileStimuli.Language
             mBuffer = buffer;
         }
 
-        public IEnumerable<ITagSpan<ErrorTag>> GetTags(NormalizedSnapshotSpanCollection spans)
+        public IEnumerable<ITagSpan<IErrorTag>> GetTags(NormalizedSnapshotSpanCollection spans)
         {
             foreach (var span in spans)
                 yield return StimParser.ParseError(span);
