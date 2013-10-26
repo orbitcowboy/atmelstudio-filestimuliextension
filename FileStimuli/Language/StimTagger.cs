@@ -22,7 +22,12 @@ namespace Xoriath.FileStimuli.Language
         public IEnumerable<ITagSpan<IErrorTag>> GetTags(NormalizedSnapshotSpanCollection spans)
         {
             foreach (var span in spans)
-                yield return StimParser.ParseError(span);
+            {
+                StimErrorTag spanError = StimParser.ParseError(span);
+
+                if (spanError != null)
+                    yield return new TagSpan<IErrorTag>(span, spanError);
+            }
         }
 
 #pragma warning disable 0067

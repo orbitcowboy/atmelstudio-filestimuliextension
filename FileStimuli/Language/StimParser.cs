@@ -58,7 +58,7 @@ namespace Xoriath.FileStimuli.Language
         private static readonly string AssignmentError = "Assignments need space between operator and values.";
         private static readonly string OperatorError = "The '*' can only occur with a named memory addres as a right value.";
 
-        public static ITagSpan<IErrorTag> ParseError(SnapshotSpan span)
+        public static StimErrorTag ParseError(SnapshotSpan span)
         {
             string text = span.GetText();
 
@@ -73,109 +73,109 @@ namespace Xoriath.FileStimuli.Language
             else if (text.Contains(@"$stimulate"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$quit"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$break"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$repeat"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$endrep"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$log"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$unlog"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$startlog"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$stoplog"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$fuse"))
             {
                 if (!mTwoArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"#"))
             {
                 if (!mOneArgumentIsNumberRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$reset"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
 
                 string type = mOneArgumentRegex.Match(text).Groups[1].Value;
                 if (!(type == "p" || type == "e" || type == "b" || type == "s"))
-                    return new TagSpan<IErrorTag>(span, new StimErrorTag(ArgumentNumberErrorType, ResetError));
+                    return new StimErrorTag(ArgumentNumberErrorType, ResetError);
 
                 return null;
             }
             else if (text.Contains(@"$"))
             {
-                return new TagSpan<IErrorTag>(span, new StimErrorTag(UnknownDirectiveErrorType, UnknownDirectiveErrorType));
+                return new StimErrorTag(UnknownDirectiveErrorType, UnknownDirectiveErrorType);
             }
             else if (!mOperatorHaveSpace.IsMatch(text) && !mLineIsOnlySpace.IsMatch(text))
             {
-                return new TagSpan<IErrorTag>(span, new StimErrorTag(AssignmentError, AssignmentError));
+                return new StimErrorTag(AssignmentError, AssignmentError);
             }
             else if (mDisallowedOperators.IsMatch(text))
             {
-                return new TagSpan<IErrorTag>(span, new StimErrorTag(OperatorError, OperatorError));
+                return new StimErrorTag(OperatorError, OperatorError);
             }
             else if (text.Contains("*"))
             {
                 if (!mDereferencingOnlyOnText.IsMatch(text))
                     return null;
 
-                return new TagSpan<IErrorTag>(span, new StimErrorTag(OperatorError, OperatorError));
+                return new StimErrorTag(OperatorError, OperatorError);
             }
 
             return null;
