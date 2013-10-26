@@ -5,11 +5,6 @@ using Microsoft.VisualStudio.Text.Tagging;
 
 namespace Xoriath.FileStimuli.Language
 {
-    internal class StimErrorTag : ErrorTag
-    {
-        public StimErrorTag(string type, string tooltip) : base(type, tooltip) { }
-    }
-
     class StimErrorTagger : ITagger<IErrorTag>
     {
         private readonly ITextBuffer mBuffer;

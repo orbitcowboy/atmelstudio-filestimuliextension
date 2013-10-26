@@ -50,7 +50,7 @@ namespace Xoriath.FileStimuli.Language
         }
     }
 
-    internal static class StrimClassificationType
+    internal static class StimClassificationTypes
     {
         [Export(typeof(ClassificationTypeDefinition))]
         [Name("stim.directive")]

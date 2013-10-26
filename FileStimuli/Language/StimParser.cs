@@ -51,11 +51,10 @@ namespace Xoriath.FileStimuli.Language
         private static readonly Regex mLineIsOnlySpace = new Regex(@"^[ ]+$", RegexOptions.Compiled);
         private static readonly Regex mDisallowedOperators = new Regex(@"[\+\-\/]+", RegexOptions.Compiled);
 
-        private static readonly string ArgumentNumberErrorType = "Argument number error.";
         private static readonly string ArgumentNumberError = "Wrong number of arguments.";
-        private static readonly string UnknownDirectiveErrorType = "Unknown directive.";
         private static readonly string ResetError = "Unknown reset argument. Arguments should be 'p', 'e', 'b' or 's'.";
         private static readonly string AssignmentError = "Assignments need space between operator and values.";
+        private static readonly string UnknownDirectiveError = "Unknown directive.";
         private static readonly string OperatorError = "The '*' can only occur with a named memory addres as a right value.";
 
         public static StimErrorTag ParseError(SnapshotSpan span)
@@ -73,109 +72,109 @@ namespace Xoriath.FileStimuli.Language
             else if (text.Contains(@"$stimulate"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$quit"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$break"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$repeat"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$endrep"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$log"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$unlog"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$startlog"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$stoplog"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$fuse"))
             {
                 if (!mTwoArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"#"))
             {
                 if (!mOneArgumentIsNumberRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
             else if (text.Contains(@"$reset"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberErrorType, ArgumentNumberError);
+                    return new StimErrorTag(ArgumentNumberError);
 
                 string type = mOneArgumentRegex.Match(text).Groups[1].Value;
                 if (!(type == "p" || type == "e" || type == "b" || type == "s"))
-                    return new StimErrorTag(ArgumentNumberErrorType, ResetError);
+                    return new StimErrorTag(ResetError);
 
                 return null;
             }
             else if (text.Contains(@"$"))
             {
-                return new StimErrorTag(UnknownDirectiveErrorType, UnknownDirectiveErrorType);
+                return new StimErrorTag(UnknownDirectiveError);
             }
             else if (!mOperatorHaveSpace.IsMatch(text) && !mLineIsOnlySpace.IsMatch(text))
             {
-                return new StimErrorTag(AssignmentError, AssignmentError);
+                return new StimErrorTag(AssignmentError);
             }
             else if (mDisallowedOperators.IsMatch(text))
             {
-                return new StimErrorTag(OperatorError, OperatorError);
+                return new StimErrorTag(OperatorError);
             }
             else if (text.Contains("*"))
             {
                 if (!mDereferencingOnlyOnText.IsMatch(text))
                     return null;
 
-                return new StimErrorTag(OperatorError, OperatorError);
+                return new StimErrorTag(OperatorError);
             }
 
             return null;
