@@ -57,6 +57,17 @@ namespace Xoriath.FileStimuli.Language
         private static readonly string UnknownDirectiveError = "Unknown directive.";
         private static readonly string OperatorError = "The '*' can only occur with a named memory addres as a right value.";
 
+        private static bool IsStimDirective(string line, string directive)
+        {
+            int startPos = line.IndexOf(directive);
+
+            if (startPos < 0)
+                return false;
+
+            return line.Length <= (startPos + directive.Length) ||
+                (line[startPos + directive.Length] == ' ');
+        }
+
         public static StimErrorTag ParseError(SnapshotSpan span)
         {
             string text = span.GetText();
@@ -65,79 +76,94 @@ namespace Xoriath.FileStimuli.Language
             {
                 return null;
             }
-            else if (text.Contains("//"))
+            else if (text.Contains(@"//"))
             {
                 return null;
             }
-            else if (text.Contains(@"$stimulate"))
+            else if (IsStimDirective(text, @"$stimulate"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$quit"))
+            else if (IsStimDirective(text, @"$quit"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$break"))
+            else if (IsStimDirective(text, @"$break"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$repeat"))
+            else if (IsStimDirective(text, @"$repeat"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$endrep"))
+            else if (IsStimDirective(text, @"$endrep"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$log"))
+            else if (IsStimDirective(text, @"$log"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$unlog"))
+            else if (IsStimDirective(text, @"$unlog"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$startlog"))
+            else if (IsStimDirective(text, @"$startlog"))
             {
                 if (!mOneArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$stoplog"))
+            else if (IsStimDirective(text, @"$stoplog"))
             {
                 if (!mNoArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
             }
-            else if (text.Contains(@"$fuse"))
+            else if (IsStimDirective(text, @"$fuse"))
             {
                 if (!mTwoArgumentRegex.IsMatch(text))
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
+            }
+            else if (IsStimDirective(text, @"$reset"))
+            {
+                if (!mOneArgumentRegex.IsMatch(text))
+                    return new StimErrorTag(ArgumentNumberError);
+
+                string type = mOneArgumentRegex.Match(text).Groups[1].Value;
+                if (!"pebs".Contains(type))
+                    return new StimErrorTag(ResetError);
+
+                return null;
+            }
+            else if (IsStimDirective(text, @"$"))
+            {
+                return new StimErrorTag(UnknownDirectiveError);
             }
             else if (text.Contains(@"#"))
             {
@@ -145,21 +171,6 @@ namespace Xoriath.FileStimuli.Language
                     return new StimErrorTag(ArgumentNumberError);
 
                 return null;
-            }
-            else if (text.Contains(@"$reset"))
-            {
-                if (!mOneArgumentRegex.IsMatch(text))
-                    return new StimErrorTag(ArgumentNumberError);
-
-                string type = mOneArgumentRegex.Match(text).Groups[1].Value;
-                if (!(type == "p" || type == "e" || type == "b" || type == "s"))
-                    return new StimErrorTag(ResetError);
-
-                return null;
-            }
-            else if (text.Contains(@"$"))
-            {
-                return new StimErrorTag(UnknownDirectiveError);
             }
             else if (!mOperatorHaveSpace.IsMatch(text) && !mLineIsOnlySpace.IsMatch(text))
             {
@@ -169,7 +180,7 @@ namespace Xoriath.FileStimuli.Language
             {
                 return new StimErrorTag(OperatorError);
             }
-            else if (text.Contains("*"))
+            else if (text.Contains(@"*"))
             {
                 if (!mDereferencingOnlyOnText.IsMatch(text))
                     return null;
