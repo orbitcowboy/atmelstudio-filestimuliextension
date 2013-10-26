@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Tagging;
+using Microsoft.VisualStudio.Utilities;
 
 namespace Xoriath.FileStimuli.Language
 {
@@ -15,7 +12,7 @@ namespace Xoriath.FileStimuli.Language
     internal class StimCodeClassifierProvider : IClassifierProvider
     {
         [Import]
-        internal IClassificationTypeRegistryService mClassificationRegistryService = null;
+        internal IClassificationTypeRegistryService mClassificationRegistryService { get; set; }
 
         public IClassifier GetClassifier(ITextBuffer buffer)
         {

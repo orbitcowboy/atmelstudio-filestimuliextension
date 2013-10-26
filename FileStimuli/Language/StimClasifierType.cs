@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.Text.Classification;
-using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.Utilities;
+﻿using System.ComponentModel.Composition;
 using System.Windows.Media;
+using Microsoft.VisualStudio.Text.Classification;
+using Microsoft.VisualStudio.Utilities;
 
 namespace Xoriath.FileStimuli.Language
 {
@@ -67,6 +63,5 @@ namespace Xoriath.FileStimuli.Language
         [Export(typeof(ClassificationTypeDefinition))]
         [Name("stim.comment")]
         internal static ClassificationTypeDefinition StimCommentType { get; set; }
-
     }
 }
