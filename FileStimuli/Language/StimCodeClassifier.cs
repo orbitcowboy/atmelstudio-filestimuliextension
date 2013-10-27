@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Classification;
 
 namespace Xoriath.FileStimuli.Language
 {
     internal sealed class StimCodeClassifier : IClassifier
     {
-        private ITextBuffer mTextBuffer;
-        private IClassificationTypeRegistryService mClassificationTypeRegistry;
-
-        private readonly List<ClassificationSpan> classifications = new List<ClassificationSpan>();
-
         private static readonly Dictionary<StimParser.StimLineTypes, string> mClassifierTypeNames = new Dictionary<StimParser.StimLineTypes, string>() {
             { StimParser.StimLineTypes.DIRECTIVE, "stim.directive" },
             { StimParser.StimLineTypes.DELAY, "stim.delay" },
             {StimParser.StimLineTypes.COMMENT, "stim.comment"},
         };
 
+        private readonly ITextBuffer mTextBuffer;
+        private readonly IClassificationTypeRegistryService mClassificationTypeRegistry;
+        private readonly List<ClassificationSpan> classifications = new List<ClassificationSpan>();
 
         public StimCodeClassifier(ITextBuffer buffer, IClassificationTypeRegistryService classifierTypeRegistry)
         {
@@ -44,6 +40,7 @@ namespace Xoriath.FileStimuli.Language
 
             return classifications;
         }
+
 #pragma warning disable 0067
         public event EventHandler<ClassificationChangedEventArgs> ClassificationChanged;
 #pragma warning restore 0067

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.Text.Classification;
-using System.ComponentModel.Composition;
-using Microsoft.VisualStudio.Utilities;
+﻿using System.ComponentModel.Composition;
 using System.Windows.Media;
+using Microsoft.VisualStudio.Text.Classification;
+using Microsoft.VisualStudio.Utilities;
+using Microsoft.VisualStudio.Text.Adornments;
 
 namespace Xoriath.FileStimuli.Language
 {
@@ -54,7 +51,21 @@ namespace Xoriath.FileStimuli.Language
         }
     }
 
-    internal static class StrimClassificationType
+    [Export(typeof(EditorFormatDefinition))]
+    [Name("stim.error")]
+    [UserVisible(true)]
+    [Order(After = Priority.High)]
+    internal sealed class StimErrorType : EditorFormatDefinition
+    {
+        public StimErrorType()
+        {
+            DisplayName = "Stimulus Error";
+            ForegroundColor = Colors.Red;
+            BackgroundCustomizable = false;
+        }
+    }
+
+    internal static class StimEditorDefinitions
     {
         [Export(typeof(ClassificationTypeDefinition))]
         [Name("stim.directive")]
@@ -68,5 +79,8 @@ namespace Xoriath.FileStimuli.Language
         [Name("stim.comment")]
         internal static ClassificationTypeDefinition StimCommentType { get; set; }
 
+        [Export(typeof(ErrorTypeDefinition))]
+        [Name("stim.error")]
+        internal static ErrorTypeDefinition StimErrorType { get; set; }    
     }
 }

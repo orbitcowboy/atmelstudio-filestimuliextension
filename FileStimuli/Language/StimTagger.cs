@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.Text.Tagging;
 using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Classification;
+using Microsoft.VisualStudio.Text.Tagging;
 
 namespace Xoriath.FileStimuli.Language
 {
-    class StimErrorTagger : ITagger<ErrorTag>
+    class StimErrorTagger : ITagger<IErrorTag>
     {
         private readonly ITextBuffer mBuffer;
 
@@ -17,14 +14,17 @@ namespace Xoriath.FileStimuli.Language
             mBuffer = buffer;
         }
 
-        public IEnumerable<ITagSpan<ErrorTag>> GetTags(NormalizedSnapshotSpanCollection spans)
+        public IEnumerable<ITagSpan<IErrorTag>> GetTags(NormalizedSnapshotSpanCollection spans)
         {
             foreach (var span in spans)
             {
-                var error = StimParser.ParseError(span);
-                yield return error;
+                StimErrorTag spanError = StimParser.ParseError(span);
+
+                if (spanError != null)
+                    yield return new TagSpan<IErrorTag>(span, spanError);
             }
         }
+
 #pragma warning disable 0067
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
 #pragma warning restore 0067
